@@ -192,18 +192,20 @@ summary <- data.frame(Label,Percentage)
 ########
 ########
 ######
-prop.test(4,24,alternative="less",conf.level=0.95,correct=TRUE) # 4 out of 24 times best team won
-#Output:
-1-sample proportions test with continuity correction
 
-data:  4 out of 24, null probability 0.5
-X-squared = 9.375, df = 1, p-value = 0.0011
-alternative hypothesis: true p is less than 0.5
-95 percent confidence interval:
-  0.0000000 0.3473635
-sample estimates:
-  p 
-0.1666667 
+prop.test(4,24,alternative="less",conf.level=0.95,correct=TRUE) # 4 out of 24 times best team won
+
+#Output:
+#1-sample proportions test with continuity correction
+
+#data:  4 out of 24, null probability 0.5
+#X-squared = 9.375, df = 1, p-value = 0.0011
+#alternative hypothesis: true p is less than 0.5
+#95 percent confidence interval:
+#  0.0000000 0.3473635
+#sample estimates:
+#  p 
+#0.1666667 
 
 
 

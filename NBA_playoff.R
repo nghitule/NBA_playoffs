@@ -216,13 +216,13 @@ ggplot(data=teams_n_PCT,aes(Different_PCT,Teams,color=Label,label=Year)) + geom_
 
 # Teams and PCT difference of games. Label:Year
 ggplot(data=teams_n_PCT,aes(Different_PCT,Teams,color=Label,label=Year)) + geom_point() + geom_text(hjust = 1, nudge_x = 0,size=2.5,angle=45,check_overlap = FALSE)
-ggplot(data=teams_n_PCT,aes(Different_PCT,Teams,color=Label,label=Game_Number)) + geom_point() + geom_text(hjust = 1, nudge_x = 0.005,angle=45,size=2.5,check_overlap = FALSE)
-ggplot(data=teams_n_PCT,aes(PPG,Teams,color=Label,label=Game_Number)) + geom_point() + geom_text(hjust = 1, nudge_x = 0.005,angle=45,size=2.5,check_overlap = FALSE)
+#ggplot(data=teams_n_PCT,aes(Different_PCT,Teams,color=Label,label=Game_Number)) + geom_point() + geom_text(hjust = 1, nudge_x = 0.005,angle=45,size=2.5,check_overlap = FALSE)
+#ggplot(data=teams_n_PCT,aes(PPG,Teams,color=Label,label=Game_Number)) + geom_point() + geom_text(hjust = 1, nudge_x = 0.005,angle=45,size=2.5,check_overlap = FALSE)
 
 # Histogram: counting number of times Higher_PCT and Lower_PCT.
 ggplot(teams_n_PCT, aes(x=Different_PCT,color=Label,fill=Label)) + geom_histogram(breaks=seq(0,0.4, by=0.05)) + labs(title="Histogram for Different PCT values")
-ggplot(teams_n_PCT, aes(x=PCT,color=Label,fill=Label)) + geom_histogram(breaks=seq(min(teams_n_PCT$PCT),max(teams_n_PCT$PCT), by=0.05)) + labs(title="Histogram for PCT values")
-ggplot(teams_n_PCT, aes(x=PPG,color=Label,fill=Label)) + geom_histogram(breaks=seq(min(teams_n_PCT$PPG),max(teams_n_PCT$PPG), by=1)) + labs(title="Histogram for PPG values")
+#ggplot(teams_n_PCT, aes(x=PCT,color=Label,fill=Label)) + geom_histogram(breaks=seq(min(teams_n_PCT$PCT),max(teams_n_PCT$PCT), by=0.05)) + labs(title="Histogram for PCT values")
+#ggplot(teams_n_PCT, aes(x=PPG,color=Label,fill=Label)) + geom_histogram(breaks=seq(min(teams_n_PCT$PPG),max(teams_n_PCT$PPG), by=1)) + labs(title="Histogram for PPG values")
 
 #########
 # Save important data to .csv file for back up.
@@ -392,17 +392,6 @@ summary(lm_multi_factors)
 #####
 ######
 # Naive Bayes method 
-# Naive Bayes Classifier is a supervised and probabalistic learning method. 
-# It does well with data in which the inputs are independent from one another. 
-# It also prefers problems where the probability of any attribute is greater than zero.
-Naive Bayes is one of the most effective and efficient classification algorithms.
-In classification learning problems, a learner attempts to construct a classifier
-from a given set of training examples with class labels
-
-This simple case study shows that a Naïve Bayes classifier makes few mistakes in a dataset that, 
-although simple, is not linearly separable, as shown in the scatterplots and by a look at the confusion matrix, 
-where all misclassifications are between Iris Versicolor and Iris Virginica instances.
-
 
 library("caret") # predict()
 library("e1071")
@@ -425,20 +414,9 @@ prop.table(table(predict(model$finalModel,x)$class,y)) # probability
 
 pairs(data_naive[1:4],col=data_naive$Label)
 
-# With Different_PCT : GOOD
 #Higher PCT won Lower PCT won
-#Higher PCT won            122            26
-#Lower PCT won              15            23
-
-Higher PCT won Lower PCT won
-Higher PCT won     0.65591398    0.13978495
-Lower PCT won      0.08064516    0.12365591
-
-
-# W/o Different_PCT: NOT GOOD
-#Higher PCT won Lower PCT won
-#Higher PCT won            124            33
-#Lower PCT won              13            16
+#Higher PCT won     0.65591398    0.13978495
+#Lower PCT won      0.08064516    0.12365591
 
 
 # Now, predict to see if a strong or weak team will win the series.
@@ -466,32 +444,6 @@ for (i in 1:nrow(predict_data)) {
 }
 predict_data[["Prediction"]] <- prediction
 predict_data[["Actual"]] <- data_naive[,5]
-
-
-# Check if the propabilities of HCT and LCT are equal
-a <- 0
-for (i in 1:nrow(predict_data)) {
-  if (predict_data[i,1] == predict_data[i,2]) {
-    a <- a +1
-  }
-}
-
-# Count how many times it predicts correctly.
-correct_guess <- 0
-wrong_guess <- 0
-correct <- data.frame()
-wrong <- data.frame()
-
-for (i in 1:nrow(predict_data)) {
-  if (grepl(predict_data[i,3], predict_data[i,4])) {
-    correct_guess <- correct_guess + 1
-    correct <- rbind(correct,teams_n_PCT[i,])
-  }
-  else {
-    wrong_guess <- wrong_guess + 1
-    wrong <- rbind(wrong,teams_n_PCT[i,])
-  }
-}
 
 
 write.csv(predict_data,file="Naive_Bayes_Prediction")
